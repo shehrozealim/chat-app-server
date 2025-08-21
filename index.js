@@ -25,8 +25,8 @@ app.use(express.json({ limit: '5mb' }))
 app.use(express.urlencoded({ limit: '50mb' }));
 app.use(cookieParser())
 app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
+    origin: 'http://localhost:3000',
+    credentials: true
 }));
 
 
@@ -40,6 +40,8 @@ app.use(fetchMessages)
 app.use(join)
 app.use(search)
 
+const channels = new Map()
+
 wss.on('connection', ws => {
     console.log(`Connect: Total active connections: ${wss.clients.size}`)
     ws.on('error', console.error)
@@ -47,24 +49,42 @@ wss.on('connection', ws => {
     ws.on('message', async (data) => {
         const res = JSON.parse(data.toString())
 
-        if (res.event === 'messageCreate') {
-            wss.clients.forEach(client => {
+        if (res.event === 'channelConnect') {
+            const { channelId } = res
+            ws.channel = channelId;
+
+            if (!channels.has(channelId)) {
+                channels.set(channelId, new Set());
+            }
+            channels.get(channelId).add(ws);
+
+
+        } else if (res.event === 'messageCreate') {
+            const { channelId } = res;
+            const clients = channels.get(channelId) || new Set();
+
+            for (const client of clients) {
                 if (client.readyState === WebSocket.OPEN) {
                     client.send(JSON.stringify(res));
                 }
-            })
+            }
+            // wss.clients.forEach(client => {
+            //     if (client.readyState === WebSocket.OPEN) {
+            //         client.send(JSON.stringify(res));
+            //     }
+            // })
         } else if (res.event === 'switchChannel') {
-            console.log('event')
+
             const userId = res.userId;
             const channelId = res.channelData.channelId;
             const guildId = res.channelData.guildId
 
             const userData = await userSchema.findOneAndUpdate({ userId })
             const lastVisited = userData.lastVisited.filter(x => x.guildId === guildId)
-            if(lastVisited.length === 0) {
+            if (lastVisited.length === 0) {
                 userData.lastVisited.push({ channelId, guildId });
                 return userData.save()
-            } else if(lastVisited.length > 1) {
+            } else if (lastVisited.length > 1) {
                 const index = userData.lastVisited.indexOf({ channelId, guildId })
                 userData.lastVisited.splice(index, 1)
             }

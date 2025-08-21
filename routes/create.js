@@ -128,7 +128,9 @@ app.post('/create/message', upload.single('file'), async (req, res) => {
             const parts = att.base64.split(';')
             const base64 = parts[1].split(',')[1]
             const fileExtension = att.type.split('/')[1]
-            const fileType = att.type.split('/')[0]
+            const fileType = att.type
+            const fileName = att.name
+            const fileSize = att.size
             const fileKey = `${new Date().getTime()}${Math.floor(Math.random() * 10000000)}.${fileExtension}`
             const buffer = Buffer.from(base64, "base64");
 
@@ -146,7 +148,9 @@ app.post('/create/message', upload.single('file'), async (req, res) => {
                 fileUrl: url,
                 type: fileType,
                 extension: fileExtension,
-                dateUploaded: new Date()
+                dateUploaded: new Date(),
+                fileName,
+                fileSize
 
             })
         }))

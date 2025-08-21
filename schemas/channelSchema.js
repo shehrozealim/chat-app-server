@@ -18,6 +18,8 @@ const channelSchema = new mongoose.Schema({
             fileUrl: { type: String },
             type: { type: String },
             dateUploaded: { type: Date },
+            fileName: { type: String },
+            fileSize: { type: Number }
         }]
     }]
 })

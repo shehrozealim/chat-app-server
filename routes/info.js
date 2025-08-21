@@ -44,6 +44,7 @@ app.get('/info/user/history', async (req, res) => {
             const { userId } = decoded;
             const userData = await userSchema.findOne({ userId })
             if(!userData) return res.status(404).json({ error: 'does not exist' });
+            if(userData.lastVisited.length === 0) return res.status(200).json([])
             return res.status(200).json(userData.lastVisited)
         })
     } catch (error) {
@@ -59,7 +60,7 @@ app.post('/info/user/history', async(req, res) => {
         jwt.verify(accessToken, process.env.SECRET_KEY, async(err, decoded) => {
             if(err) return res.status(404).json({ error: err.message });
             const { userId } = decoded;
-            const userData = await userSchema.findOneAndUpdate({ userId })
+            const userData = await userSchema.findOne({ userId })
             if(!userData) return res.status(404).json({ error: 'does not exist' });
             userData.lastVisited = history
             await userData.save()
