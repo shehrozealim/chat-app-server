@@ -25,8 +25,9 @@ app.use(express.json({ limit: '5mb' }))
 app.use(express.urlencoded({ limit: '50mb' }));
 app.use(cookieParser())
 app.use(cors({
-    origin: 'https://chat-app-client-six-ivory.vercel.app',
+    origin: ['https://chat-app-client-six-ivory.vercel.app', 'http://localhost:3000'],
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }));
 
 
