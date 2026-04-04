@@ -15,7 +15,7 @@ app.post('/login', async(req, res) => {
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 60 * 1000,
+        maxAge: 10 * 60 * 1000,
         sameSite: 'none'
     })
     return res.status(200).json({ accessToken })
