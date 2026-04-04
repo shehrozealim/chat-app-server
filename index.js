@@ -33,6 +33,8 @@ app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }));
 
+app.options('*', cors());
+
 
 app.use(registerUser)
 app.use(loginUser)
