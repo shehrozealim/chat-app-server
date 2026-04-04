@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { createServer } from 'http'
 import cookieParser from 'cookie-parser'
 import { WebSocketServer, WebSocket } from 'ws'
 import mongoose from 'mongoose'
@@ -7,8 +8,9 @@ import { config } from 'dotenv'
 config()
 
 const app = express()
+const server = createServer(app)
 
-const wss = new WebSocketServer({ port: 8080 })
+const wss = new WebSocket.Server({ server })
 
 import registerUser from './routes/registerUser.js'
 import loginUser from './routes/loginUser.js'
@@ -99,7 +101,7 @@ wss.on('connection', ws => {
     });
 })
 
-app.listen(5000, () => {
+server.listen(5000, () => {
     console.log('Server running on 5000')
     mongoose.connect(`${process.env.MONGODB_URI}`, { dbName: 'chat-app' }).then(() => console.log('Connected to MONGODB'))
         .catch(err => console.log(err.message))
