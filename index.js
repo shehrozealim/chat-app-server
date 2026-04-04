@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { createServer } from 'http'
 import cookieParser from 'cookie-parser'
-import WebSocket from 'ws'
+import { WebSocketServer, WebSocket } from 'ws'
 import mongoose from 'mongoose'
 import { config } from 'dotenv'
 config()
@@ -10,7 +10,7 @@ config()
 const app = express()
 const server = createServer(app)
 
-const wss = new WebSocket.Server({ server })
+const wss = new WebSocketServer({ server })
 
 import registerUser from './routes/registerUser.js'
 import loginUser from './routes/loginUser.js'
