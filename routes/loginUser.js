@@ -12,6 +12,12 @@ app.post('/login', async(req, res) => {
     const accessToken = jwt.sign({ username: userData.username, userId: userData.userId, email, loggedIn: new Date().getTime() }, process.env.SECRET_KEY, {
         expiresIn: 60 * 10
     })
+    res.cookie('accessToken', accessToken, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 60 * 1000,
+        path: "/"
+    })
     return res.status(200).json({ accessToken })
 })
 
