@@ -28,14 +28,14 @@ app.set('trust proxy', 1)
 const allowedOrigins = ['https://fakelf-chat-app.netlify.app']
 
 app.use(cors({
-    origin: allowedOrigins,
+    origin: 'https://fakelf-chat-app.netlify.app',
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     // allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
 
 app.options(/(.*)/, cors({
-    origin: allowedOrigins,
+    origin: 'https://fakelf-chat-app.netlify.app',
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
