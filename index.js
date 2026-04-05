@@ -23,15 +23,10 @@ import join from './routes/join.js'
 import search from './routes/search.js'
 import userSchema from './schemas/userSchema.js'
 
-app.set('trust proxy', 1)
-
-const allowedOrigins = ['https://fakelf-chat-app.netlify.app']
-
 app.use(cors({
     origin: 'https://fakelf-chat-app.netlify.app',
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
 
 app.options(/(.*)/, cors({
