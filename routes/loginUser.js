@@ -17,7 +17,8 @@ app.post('/login', async(req, res) => {
         secure: true,
         maxAge: 10 * 60 * 1000,
         sameSite: 'none',
-        path: "/"
+        path: "/",
+        partitioned: true
     })
     return res.status(200).json({ accessToken })
 })
