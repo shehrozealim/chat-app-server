@@ -23,14 +23,32 @@ import join from './routes/join.js'
 import search from './routes/search.js'
 import userSchema from './schemas/userSchema.js'
 
-app.use(express.json({ limit: '5mb' }))
-app.use(express.urlencoded({ limit: '50mb' }));
-app.use(cookieParser())
+app.set('trust proxy', 1)
+
+const allowedOrigins = [
+    'https://chat-app-client-six-ivory.vercel.app', 
+    'http://localhost:3000'
+];
+
 app.use(cors({
-    origin: ['https://chat-app-client-six-ivory.vercel.app', 'http://localhost:3000'],
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
+
+app.options('*', cors());
+
+app.use(express.json({ limit: '5mb' }))
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(cookieParser())
 
 app.use(registerUser)
 app.use(loginUser)

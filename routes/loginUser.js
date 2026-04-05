@@ -16,7 +16,8 @@ app.post('/login', async(req, res) => {
         httpOnly: true,
         secure: true,
         maxAge: 10 * 60,
-        sameSite: 'none'
+        sameSite: 'none',
+        path: "/"
     })
     return res.status(200).json({ accessToken })
 })
