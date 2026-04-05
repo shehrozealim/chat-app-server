@@ -10,7 +10,7 @@ app.post('/login', async(req, res) => {
     const userData = await userSchema.findOne({ email });
     if(!userData) return res.status(404)
     const accessToken = jwt.sign({ username: userData.username, userId: userData.userId, email, loggedIn: new Date().getTime() }, process.env.SECRET_KEY, {
-        expiresIn: 60 * 10
+        expiresIn: 60 * 10 * 1000
     })
     res.cookie('accessToken', accessToken, {
         httpOnly: true,

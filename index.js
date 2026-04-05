@@ -26,6 +26,7 @@ import userSchema from './schemas/userSchema.js'
 app.set('trust proxy', 1)
 
 const allowedOrigins = [
+    'https://fakelf-chat-app.netlify.app/',
     'https://chat-app-client-six-ivory.vercel.app',
     'http://localhost:3000'
 ];
