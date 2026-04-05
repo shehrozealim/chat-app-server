@@ -25,7 +25,7 @@ import userSchema from './schemas/userSchema.js'
 
 app.set('trust proxy', 1)
 
-const allowedOrigins = 'https://fakelf-chat-app.netlify.app'
+const allowedOrigins = ['https://fakelf-chat-app.netlify.app']
 
 app.use(cors({
     origin: (origin, callback) => {
