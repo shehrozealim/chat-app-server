@@ -29,11 +29,11 @@ app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
 
-app.options(/(.*)/, cors({
-    origin: 'https://fakelf-chat-app.netlify.app',
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-}));
+// app.options(/(.*)/, cors({
+//     origin: 'https://fakelf-chat-app.netlify.app',
+//     credentials: true,
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+// }));
 
 app.use(express.json({ limit: '5mb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
