@@ -24,7 +24,7 @@ import search from './routes/search.js'
 import userSchema from './schemas/userSchema.js'
 
 app.use(cors({
-    origin: 'https://fakelf-chat-app.netlify.app',
+    origin: ['https://fakelf-chat-app.netlify.app', 'http://localhost:3000'],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
