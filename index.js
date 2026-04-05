@@ -25,11 +25,6 @@ import userSchema from './schemas/userSchema.js'
 
 app.set('trust proxy', 1)
 
-// const allowedOrigins = [
-//     'https://fakelf-chat-app.netlify.app/',
-//     'https://chat-app-client-six-ivory.vercel.app',
-//     'http://localhost:3000'
-// ];
 const allowedOrigins = 'https://fakelf-chat-app.netlify.app'
 
 app.use(cors({
@@ -46,9 +41,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
 
-// app.options('*', cors());
 app.options(/(.*)/, cors({
-    origin: ['https://chat-app-client-six-ivory.vercel.app', 'http://localhost:3000'],
+    origin: allowedOrigins,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
