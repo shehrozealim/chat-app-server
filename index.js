@@ -110,7 +110,7 @@ wss.on('connection', ws => {
 })
 
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+// dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('CONNECTED TO DB'))
