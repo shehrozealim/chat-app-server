@@ -112,10 +112,10 @@ wss.on('connection', ws => {
 
 // dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('CONNECTED TO DB'))
-  .catch(err => console.log(err));
 
 server.listen(5000, () => {
+    mongoose.connect(process.env.MONGODB_URI)
+      .then(() => console.log('CONNECTED TO DB'))
+      .catch(err => console.log(err));
     console.log('Server running on 5000')
 })
